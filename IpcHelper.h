@@ -77,6 +77,8 @@ bool IpcHelper::SharedMemoryHelper::openSharedMemory(std::wstring str, uint32_t 
 	std::wstring bufferMutexName = std::wstring(str) + L".buffer.mutex";
 	std::wstring bufferEventName = std::wstring(str) + L".buffer.event.data";
 	std::wstring shutdownName = std::wstring(str) + L".buffer.event.shutdown";
+	// size
+	helper->m_size = size;
 	// mapfile
 	helper->m_hBufferMapFile = OpenFileMappingW(
 		FILE_MAP_ALL_ACCESS,
@@ -117,7 +119,9 @@ bool IpcHelper::SharedMemoryHelper::createSharedMemory(std::wstring str, uint32_
 
 	if (isExist(str))
 		goto Failed;
-
+	// size
+	helper->m_size = size;
+	// file map
 	helper->m_hBufferMapFile = CreateFileMappingW(
 		INVALID_HANDLE_VALUE,
 		NULL,
